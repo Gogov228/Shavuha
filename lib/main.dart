@@ -17,22 +17,52 @@ class MyApp extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Салам, шаурма пополам'),
+        backgroundColor: Colors.pink[200],
+        title: Center(
+          child: Text('ШАВУХА'),
+        ),
       ),
       body: Container(
-        color: Colors.greenAccent,
+        //color: Colors.deepOrange,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(bottom: 30),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/shavaCat.jpg',
+                    height: 250,
+                    width: 250,
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  "Салам пополам любитель шаурмы!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                ),
+              ),
               FlatButton(
+                child: Text(
+                  "Начать!",
+                  style: TextStyle(fontSize: 18),
+                ),
+                padding: EdgeInsets.only(left: 50, right: 50),
                 color: Colors.pink[200],
                 disabledColor: Colors.pink[200],
                 onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => ChouseShavuha(),
-                    )),
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => ChouseShavuha(),
+
+                  ),
+                ),
               ),
             ],
           ),
