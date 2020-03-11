@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
               Container(
                 margin: EdgeInsets.all(10),
                 child: Text(
-                  "Салам пополам любитель шаурмы!",
+                  "Салам, шаурма пополам!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,

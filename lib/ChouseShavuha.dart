@@ -28,79 +28,167 @@ class _chouse extends State<ChouseShavuha> {
         ],
       ),
       body: Container(
-        //color: Colors.greenAccent,
+        color: Colors.grey[300],
         child: Center(
-          child: Column(
+          child: ListView(
             children: <Widget>[
+              ControlShaurm(),
+              if (_currentSelection == 0)
+              ShaurAdd('assets/shavaCat.jpg', "Шaурма", "Лаваш, мясо на выбор (курица, свинина), помидоры, капуста, огурцы", "Цена: 200"),
+              if (_currentSelection == 0)
+              ShaurAdd('assets/shavaCat.jpg',"Чизурма","Там всё огонь","Цена: 200"),
+              if (_currentSelection == 0)
+              ShaurAdd('assets/shavaCat.jpg', "Рандом от Шаурмейкера", "Лаваш, мясо - рандом, овощи рандом от 2 до 3 штук", "Цена: 200"),
+
+              if (_currentSelection == 1)
               Container(
-                margin: EdgeInsets.all(10),
-                child: MaterialSegmentedControl(
-                  children: _children(),
-                  selectionIndex: _currentSelection,
-                  borderColor: Colors.grey,
-                  selectedColor: Colors.orangeAccent[200],
-                  unselectedColor: Colors.white,
-                  borderRadius: 32.0,
-                  disabledChildren: [
-                    2,
-                  ],
-                  onSegmentChosen: (index) {
-                    setState(() {
-                      _currentSelection = index;
-                      //debugPrint(index);
-                    });
-                  },
+                margin: EdgeInsets.only(bottom: 15),
+                child: Center(
+                  child: Text(
+                    "Мясо",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                  ),
                 ),
               ),
+              if (_currentSelection == 1)
+              ChouseIngredient("Свинка (Аллах под лавашом не видит)"),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container ControlShaurm() {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: MaterialSegmentedControl(
+        children: _children(),
+        selectionIndex: _currentSelection,
+        borderColor: Colors.grey,
+        selectedColor: Colors.orangeAccent[200],
+        unselectedColor: Colors.white,
+        borderRadius: 32.0,
+        disabledChildren: [
+          2,
+        ],
+        onSegmentChosen: (index) {
+          setState(() {
+            _currentSelection = index;
+            print(index);
+            if (index == 1) {
+            } else {}
+          });
+        },
+      ),
+    );
+  }
+
+  Card ChouseIngredient(String subTitle){
+    return Card(
+      color: Colors.pink[100],
+      child: Row(
+        children: <Widget>[
+          Container(
+            child: Text("X0"),
+            margin: EdgeInsets.all(20),
+          ),
+          Column(
+            children: <Widget>[
+              ButtonTheme(
+                minWidth: 30,
+                height: 30,
+                child: FlatButton(
+                  color: Colors.grey[100],
+                  disabledColor: Colors.grey[100],
+                  child: Text("+"),
+                ),
+              ),
+              ButtonTheme(
+                minWidth: 30,
+                height: 30,
+                child: FlatButton(
+                  color: Colors.grey[100],
+                  disabledColor: Colors.grey[100],
+                  child: Text("-"),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              margin: EdgeInsets.all(4),
+              child: Text(subTitle),
+            ),
+          ),
+          Container(margin: EdgeInsets.all(4), child: Text("100р")),
+        ],
+      ),
+    );
+  }
+
+  Container ShaurAdd(String image, String name, String subText, String price) {
+    return Container(
+      child: Card(
+        color: Colors.pink[100],
+        child: Container(
+          child: Row(
+            children: <Widget>[
               Container(
-                child: Card(
-                  child: Container(
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(15),
-                          child: Image.asset(
-                            'assets/shavaCat.jpg',
-                            width: 100,
-                            height: 100,
-                          ),
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Center(
-                              child: Text("Шаурма"),
-                            ),
-                            Center(
-                              child: Container(
-                                width: 200,
-                                child: new Text(
-                                  "Лаваш, мясо на выбор (курица, свинина), помидоры",
-                                  softWrap: true,
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              color: Colors.deepOrange,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  Text("228"),
-                                  FlatButton(
-                                    onPressed: null,
-                                    child: null,
-                                    color: Colors.grey,
-                                    disabledColor: Colors.grey,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                margin: EdgeInsets.all(15),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    image,
+                    width: 100,
+                    height: 100,
                   ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        width: 200,
+                        child: new Text(
+                          subText,
+                          softWrap: true,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10, right: 10),
+                      //color: Colors.deepOrange,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            price,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 18),
+                          ),
+                          FlatButton(
+                            onPressed: null,
+                            child: Text("Добавить"),
+                            color: Colors.grey[200],
+                            disabledColor: Colors.grey[200],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
