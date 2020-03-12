@@ -5,7 +5,7 @@ class ChouseShavuha extends StatefulWidget {
   @override
   _chouse createState() => _chouse();
 }
-
+int priceYourShaurm=0;
 Map<int, Widget> _children() => {
       0: Text('Выбрать'),
       1: Text('Собери сам'),
@@ -33,6 +33,7 @@ class _chouse extends State<ChouseShavuha> {
           child: ListView(
             children: <Widget>[
               ControlShaurm(),
+
               if (_currentSelection == 0)
               ShaurAdd('assets/shavaCat.jpg', "Шaурма", "Лаваш, мясо на выбор (курица, свинина), помидоры, капуста, огурцы", "Цена: 200"),
               if (_currentSelection == 0)
@@ -51,7 +52,47 @@ class _chouse extends State<ChouseShavuha> {
                 ),
               ),
               if (_currentSelection == 1)
-              ChouseIngredient("Свинка (Аллах под лавашом не видит)"),
+              ChouseIngredient("Свинка (Аллах под лавашом не видит)",100),
+              if (_currentSelection == 1)
+              ChouseIngredient("Курочка",100),
+              if (_currentSelection == 1)
+                Container(
+                  margin: EdgeInsets.only(bottom: 15,top: 15),
+                  child: Center(
+                    child: Text(
+                      "Овощи",
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                ),
+              if (_currentSelection == 1)
+                ChouseIngredient("Помидор",20),
+              if (_currentSelection == 1)
+                ChouseIngredient("Огурец",20),
+              if (_currentSelection == 1)
+                ChouseIngredient("Лук",10),
+              if (_currentSelection == 1)
+                ChouseIngredient("Листья салата",10),
+              if (_currentSelection == 1)
+                ChouseIngredient("Капуста",20),
+              if (_currentSelection == 1)
+              Container(
+                margin: EdgeInsets.only(bottom: 15,top: 15),
+                child: Center(
+                  child: Text(
+                    "Соусы",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ),
+              if (_currentSelection == 1)
+                ChouseIngredient("Мазик",20),
+              if (_currentSelection == 1)
+                ChouseIngredient("Кепчук",20),
+              if (_currentSelection == 1)
+                ChouseIngredient("Сырный",20),
+              if (_currentSelection == 1)
+                ChouseIngredient("Соус от Шефа",50),
             ],
           ),
         ),
@@ -84,13 +125,14 @@ class _chouse extends State<ChouseShavuha> {
     );
   }
 
-  Card ChouseIngredient(String subTitle){
+  Card ChouseIngredient(String subTitle, int price){
+    int count = 0;
     return Card(
       color: Colors.pink[100],
       child: Row(
         children: <Widget>[
           Container(
-            child: Text("X0"),
+            child: Text("X$count"),
             margin: EdgeInsets.all(20),
           ),
           Column(
@@ -102,6 +144,7 @@ class _chouse extends State<ChouseShavuha> {
                   color: Colors.grey[100],
                   disabledColor: Colors.grey[100],
                   child: Text("+"),
+                  onPressed: ()=> bletPlus(count,price),
                 ),
               ),
               ButtonTheme(
@@ -111,6 +154,7 @@ class _chouse extends State<ChouseShavuha> {
                   color: Colors.grey[100],
                   disabledColor: Colors.grey[100],
                   child: Text("-"),
+                  onPressed: () =>bletMinus(count,price),
                 ),
               ),
             ],
@@ -122,11 +166,32 @@ class _chouse extends State<ChouseShavuha> {
               child: Text(subTitle),
             ),
           ),
-          Container(margin: EdgeInsets.all(4), child: Text("100р")),
+          Container(margin: EdgeInsets.all(4), child: Text("$price р")),
         ],
       ),
     );
   }
+
+  void bletMinus(int count,int price){
+    if (count>0) {
+      setState(() {
+        priceYourShaurm -= price;
+        count-=1;
+        print(count);
+        print(priceYourShaurm);
+      });
+    }
+  }
+  void bletPlus(int count,int price){
+    if (count<=0) {
+      setState(() {
+        priceYourShaurm += price;
+        count++;
+        print(count);
+        print(priceYourShaurm);
+      });
+    }
+    }
 
   Container ShaurAdd(String image, String name, String subText, String price) {
     return Container(
