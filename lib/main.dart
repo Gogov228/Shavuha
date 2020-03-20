@@ -12,6 +12,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  static const SCREEN_KEY = "MainScreen";
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -60,7 +62,6 @@ class MyApp extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) => ChouseShavuha(),
-
                   ),
                 ),
               ),
