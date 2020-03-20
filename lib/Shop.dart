@@ -105,12 +105,13 @@ class shop extends State<Shop> {
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
                       setState(() {
+
+                        print(shaurList.keys.toList()[index]);
                         shaurList.remove(index);
                         shaurList.keys.toList()[index];
-                        print(shaurList);
-                        print(shaurList.keys.toList()[index]);
                         countShava--;
                         totalSum -= shaurPrise[index];
+                        print(shaurList);
                       });
                       Scaffold.of(context).showSnackBar(
                           SnackBar(content: Text("Узбек грустит(")));

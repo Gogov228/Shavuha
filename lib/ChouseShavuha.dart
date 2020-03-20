@@ -46,15 +46,15 @@ class _chouse extends State<ChouseShavuha> {
               ControlShaurm(),
               if (_currentSelection == 0)
                 ShaurAdd(
-                    'assets/shavaCat.jpg',
+                    'assets/shaurmaaa.jpg',
                     "Шaурма",
                     "Лаваш, мясо на выбор (курица, свинина), помидоры, капуста, огурцы",
                     200),
               if (_currentSelection == 0)
                 ShaurAdd(
-                    'assets/shavaCat.jpg', "Чизурма", "Там всё огонь", 200),
+                    'assets/chizurma.jpg', "Чизурма", "Там всё огонь", 200),
               if (_currentSelection == 0)
-                ShaurAdd('assets/shavaCat.jpg', "Рандом от Шаурмейкера",
+                ShaurAdd('assets/random.jpg', "Рандом от Шаурмейкера",
                     "Лаваш, мясо - рандом, овощи рандом от 2 до 3 штук", 200),
               if (_currentSelection == 1)
                 Container(
@@ -430,7 +430,7 @@ class _chouse extends State<ChouseShavuha> {
               Container(
                 margin: EdgeInsets.all(15),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(4.0),
                   child: Image.asset(
                     image,
                     width: 100,
