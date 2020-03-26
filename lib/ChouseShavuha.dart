@@ -125,12 +125,15 @@ class _chouse extends State<ChouseShavuha> {
                   child: FlatButton(
                     onPressed: () {
                       print(allIngredients);
-                      shaurmaList.add( ShaurShow('assets/shavaCat.jpg',
-                          'Самостоятельная сборка', 'Всё как вы просили', shaurmSum));
+                      shaurmaList.add(ShaurShow(
+                          'assets/shavaCat.jpg',
+                          'Самостоятельная сборка',
+                          'Всё как вы просили',
+                          shaurmSum));
                       shaurPrise[countShava] = shaurmSum;
                       setState(() {
                         print(shaurmSum);
-                        totalSum+=shaurmSum;
+                        totalSum += shaurmSum;
                         while (chiken > 0) chikenDeCounter(100);
                         while (svinka > 0) svinkaDeCounter(100);
                         while (tomato > 0) tomatoDeCounter(20);
@@ -141,7 +144,6 @@ class _chouse extends State<ChouseShavuha> {
                         while (mazik > 0) mazikDeCounter(20);
                         while (ketcup > 0) ketcupDeCounter(20);
                         while (chiz > 0) chizDeCounter(20);
-
 
                         countShava++;
                         shaurmSum = 0;
@@ -423,79 +425,83 @@ class _chouse extends State<ChouseShavuha> {
     });
   }
 
-
   Container ShaurAdd(String image, String name, String subText, int price) {
     return Container(
-      child: Card(
-        color: Colors.pink[100],
-        child: Container(
-          child: Row(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(15),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4.0),
-                  child: Image.asset(
-                    image,
-                    width: 100,
-                    height: 100,
+      child: SizedBox(
+        child: Card(
+          color: Colors.pink[100],
+          child: Container(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.all(8),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4.0),
+                    child: Image.asset(
+                      image,
+                      width: 100,
+                      height: 100,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: <Widget>[
-                    Center(
-                      child: Text(
-                        name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        width: 200,
-                        child: new Text(
-                          subText,
-                          softWrap: true,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 12),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: <Widget>[
+                      Center(
+                        child: Text(
+                          name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 18),
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 10, right: 10),
-                      //color: Colors.deepOrange,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            'Цена:$price',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
+                      Center(
+                        child: Container(
+                          width: 200,
+                          child: new Text(
+                            subText,
+                            softWrap: true,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 12),
                           ),
-                          FlatButton(
-                            onPressed: () {
-                              shaurList[countShava] =
-                                  ShaurShow(image, name, subText, price);
-                              shaurPrise[countShava] = price;
-                              countShavuha();
-                              print(shaurList);
-                              totalSum += price;
-                              shaurmaList.add(ShaurShow(image, name, subText, price));
-                            },
-                            child: Text("Добавить"),
-                            color: Colors.grey[200],
-                            disabledColor: Colors.grey[200],
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        margin: EdgeInsets.only(left: 10, right: 10),
+                        //color: Colors.deepOrange,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Цена:$price',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 18),
+                            ),
+                            SizedBox(
+                              child: FlatButton(
+                                onPressed: () {
+                                  shaurList[countShava] =
+                                      ShaurShow(image, name, subText, price);
+                                  shaurPrise[countShava] = price;
+                                  countShavuha();
+                                  print(shaurList);
+                                  totalSum += price;
+                                  shaurmaList.add(
+                                      ShaurShow(image, name, subText, price));
+                                },
+                                child: Text("Добавить"),
+                                color: Colors.grey[200],
+                                disabledColor: Colors.grey[200],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
