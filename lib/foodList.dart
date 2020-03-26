@@ -16,7 +16,9 @@ int shaurmSum = 0;
 int countShava = 0;
 int totalSum = 0;
 Map<int, Container> shaurList = {};
+List<Container> shaurmaList = [];
 Map<int, int> shaurPrise = {};
+int timeForTimer = 3;
 List allIngredients = [
   chiken,
   svinka,

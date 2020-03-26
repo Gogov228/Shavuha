@@ -125,10 +125,12 @@ class _chouse extends State<ChouseShavuha> {
                   child: FlatButton(
                     onPressed: () {
                       print(allIngredients);
-                      shaurList[countShava] = ShaurShow('assets/shavaCat.jpg',
-                          'Ручная сборка', 'Всё как вы просили', shaurmSum);
+                      shaurmaList.add( ShaurShow('assets/shavaCat.jpg',
+                          'Самостоятельная сборка', 'Всё как вы просили', shaurmSum));
                       shaurPrise[countShava] = shaurmSum;
                       setState(() {
+                        print(shaurmSum);
+                        totalSum+=shaurmSum;
                         while (chiken > 0) chikenDeCounter(100);
                         while (svinka > 0) svinkaDeCounter(100);
                         while (tomato > 0) tomatoDeCounter(20);
@@ -140,11 +142,12 @@ class _chouse extends State<ChouseShavuha> {
                         while (ketcup > 0) ketcupDeCounter(20);
                         while (chiz > 0) chizDeCounter(20);
 
+
                         countShava++;
                         shaurmSum = 0;
                       });
-                      print(shaurList);
-                      print(allIngredients);
+                      //print(shaurList);
+                      //print(allIngredients);
                     },
                     child: Text(
                       "Добавить за $shaurmSum",
@@ -420,6 +423,7 @@ class _chouse extends State<ChouseShavuha> {
     });
   }
 
+
   Container ShaurAdd(String image, String name, String subText, int price) {
     return Container(
       child: Card(
@@ -479,6 +483,7 @@ class _chouse extends State<ChouseShavuha> {
                               countShavuha();
                               print(shaurList);
                               totalSum += price;
+                              shaurmaList.add(ShaurShow(image, name, subText, price));
                             },
                             child: Text("Добавить"),
                             color: Colors.grey[200],

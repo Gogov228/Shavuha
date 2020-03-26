@@ -1,27 +1,45 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
+import 'package:shavuha/Timer.dart';
 import 'package:shavuha/foodList.dart';
-import 'package:shavuha/ChouseShavuha.dart';
 import 'package:shavuha/main.dart';
 
 class Shop extends StatefulWidget {
+
   @override
   shop createState() => shop();
 }
+
+
 
 class shop extends State<Shop> {
   int _currentSelection = 1;
   var i, j;
 
+
   Map<int, Widget> _children() => {
         0: Text('Доставка'),
         1: Text('Самовынос'),
       };
+
   TimeOfDay _time = new TimeOfDay.now();
+  TimeOfDay _timeNow = new TimeOfDay.now();
+
+  int waitTime(){
+    var h = _time.hour*3600-_timeNow.hour*3600;
+    var m = (_time.minute+3)*60-_timeNow.minute*60;
+    print(h);
+    print(m);
+    return h+m;
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    timeForTimer= waitTime();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink[200],
@@ -30,7 +48,6 @@ class shop extends State<Shop> {
           IconButton(
             icon: Icon(Icons.payment),
             onPressed: () {
-              print("12");
               showDialog(
                 context: context,
                 child: AlertDialog(
@@ -44,20 +61,24 @@ class shop extends State<Shop> {
                         totalSum = 0;
                         countShava = 0;
                         shaurPrise.clear();
-                        shaurList.clear();
-
-                        Navigator.pushAndRemoveUntil(
+                        shaurmaList.clear();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) => MyApp()),
-                          ModalRoute.withName(MyApp.SCREEN_KEY),
+                            builder: (BuildContext context) => CountDownTimer(waitTime()),
+                          ),
                         );
+
                       },
-                    ),
+                        ),
+
                     FlatButton(
                       child: Text("Нет"),
                       onPressed: () {
                         Navigator.pop(context);
+
                       },
                     ),
                   ],
@@ -82,6 +103,19 @@ class shop extends State<Shop> {
                 onPressed: () => selectTime(context),
               ),
             ),
+            if (_currentSelection ==0)
+              Container(
+                margin: EdgeInsets.only(top: 10, left: 4, right: 4, bottom: 10),
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                    hoverColor: Colors.pink[200],
+                    border: OutlineInputBorder(),
+                    labelText: 'Место доставки',
+                  ),
+                ),
+              ),
             Container(
               margin: EdgeInsets.only(top: 10, left: 4, right: 4, bottom: 10),
               child: TextField(
@@ -95,23 +129,22 @@ class shop extends State<Shop> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: shaurList.length,
+              child:  ListView.builder(
+                itemCount: shaurmaList.length,
                 itemBuilder: (BuildContext context, int index) {
+
                   //for (i in shaurList.keys)
-                  return Dismissible(
+                  return  Dismissible(
                     key: UniqueKey(),
-                    child: shaurList[index.toInt()],
+                    child: shaurmaList[index.toInt()],
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
                       setState(() {
-
-                        print(shaurList.keys.toList()[index]);
-                        shaurList.remove(index);
-                        shaurList.keys.toList()[index];
-                        countShava--;
+                        //print(shaurList.keys.toList()[index]);
+                        shaurmaList.removeAt(index);
+                        deCountShavuha();
                         totalSum -= shaurPrise[index];
-                        print(shaurList);
+                        print(shaurmaList);
                       });
                       Scaffold.of(context).showSnackBar(
                           SnackBar(content: Text("Узбек грустит(")));
@@ -130,13 +163,21 @@ class shop extends State<Shop> {
     );
   }
 
+
+  void deCountShavuha() {
+    setState(() {
+      countShava--;
+    });
+  }
+
   String minut() {
-    if (_time.minute + 5 == 0)
+
+    if (_time.minute + 3 == 0)
       return '${_time.minute}0';
-    else if (_time.minute + 5 < 10 && 0 < _time.minute + 5)
-      return '0${_time.minute + 5}';
+    else if (_time.minute + 3 < 10 && 0 < _time.minute + 3)
+      return '0${_time.minute + 3}';
     else
-      return '${_time.minute + 5}';
+      return '${_time.minute + 3}';
   }
 
   Container ControlShaurm() {
