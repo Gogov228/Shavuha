@@ -8,17 +8,13 @@ import 'package:shavuha/foodList.dart';
 import 'package:shavuha/main.dart';
 
 class Shop extends StatefulWidget {
-
   @override
   shop createState() => shop();
 }
 
-
-
 class shop extends State<Shop> {
   int _currentSelection = 1;
   var i, j;
-
 
   Map<int, Widget> _children() => {
         0: Text('Доставка'),
@@ -28,64 +24,62 @@ class shop extends State<Shop> {
   TimeOfDay _time = new TimeOfDay.now();
   TimeOfDay _timeNow = new TimeOfDay.now();
 
-  int waitTime(){
-    var h = _time.hour*3600-_timeNow.hour*3600;
-    var m = (_time.minute+3)*60-_timeNow.minute*60;
-    print(h);
-    print(m);
-    return h+m;
-  }
+  int waitTime() {
+    var h = _time.hour * 3600 - _timeNow.hour * 3600;
+    var m = (_time.minute + 3) * 60 - _timeNow.minute * 60;
 
+    return h + m;
+  }
 
   @override
   Widget build(BuildContext context) {
-    timeForTimer= waitTime();
+    timeForTimer = waitTime();
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: Colors.pink[200],
         title: Text("Цена заказа: $totalSum"),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.payment),
-            onPressed: () {
-              showDialog(
-                context: context,
-                child: AlertDialog(
-                  title: Text("Хотите заказать?"),
-                  content:
-                      Text("Стоимость вашего заказа составляет: $totalSum"),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("Да"),
-                      onPressed: () {
-                        totalSum = 0;
-                        countShava = 0;
-                        shaurPrise.clear();
-                        shaurmaList.clear();
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => CountDownTimer(waitTime()),
-                          ),
-                        );
-
-                      },
-                        ),
-
-                    FlatButton(
-                      child: Text("Нет"),
-                      onPressed: () {
-                        Navigator.pop(context);
-
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+          if (totalSum > 0)
+            IconButton(
+              icon: Icon(Icons.payment),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  child: AlertDialog(
+                    title: Text("Хотите заказать?"),
+                    content:
+                        Text("Стоимость вашего заказа составляет: $totalSum"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Да"),
+                        onPressed: () {
+                          totalSum = 0;
+                          countShava = 0;
+                          shaurPrise.clear();
+                          shaurmaList.clear();
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  CountDownTimer(waitTime()),
+                            ),
+                          );
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("Нет"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
         ],
       ),
       body: Container(
@@ -103,38 +97,42 @@ class shop extends State<Shop> {
                 onPressed: () => selectTime(context),
               ),
             ),
-            if (_currentSelection ==0)
-              Container(
+            SizedBox(
+              child: Container(
                 margin: EdgeInsets.only(top: 10, left: 4, right: 4, bottom: 10),
                 child: TextField(
                   keyboardType: TextInputType.multiline,
-                  maxLines: 1,
+                  maxLines: 2,
                   decoration: InputDecoration(
                     hoverColor: Colors.pink[200],
                     border: OutlineInputBorder(),
-                    labelText: 'Место доставки',
+                    labelText: 'Комментарий к заказу',
                   ),
                 ),
               ),
-            Container(
-              margin: EdgeInsets.only(top: 10, left: 4, right: 4, bottom: 10),
-              child: TextField(
-                keyboardType: TextInputType.multiline,
-                maxLines: 2,
-                decoration: InputDecoration(
-                  hoverColor: Colors.pink[200],
-                  border: OutlineInputBorder(),
-                  labelText: 'Комментарий к заказу',
+            ),
+            if (_currentSelection == 0)
+              SizedBox(
+                child: Container(
+                  margin:
+                      EdgeInsets.only(top: 10, left: 4, right: 4, bottom: 10),
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      hoverColor: Colors.pink[200],
+                      border: OutlineInputBorder(),
+                      labelText: 'Место доставки',
+                    ),
+                  ),
                 ),
               ),
-            ),
             Expanded(
-              child:  ListView.builder(
+              child: ListView.builder(
                 itemCount: shaurmaList.length,
                 itemBuilder: (BuildContext context, int index) {
-
                   //for (i in shaurList.keys)
-                  return  Dismissible(
+                  return Dismissible(
                     key: UniqueKey(),
                     child: shaurmaList[index.toInt()],
                     direction: DismissDirection.endToStart,
@@ -143,8 +141,11 @@ class shop extends State<Shop> {
                         //print(shaurList.keys.toList()[index]);
                         shaurmaList.removeAt(index);
                         deCountShavuha();
-                        totalSum -= shaurPrise[index];
-                        print(shaurmaList);
+                        totalSum -= priseList[index];
+                        priseList.removeAt(index);
+                        //shaurPrise.remove(index);
+                        print(shaurPrise);
+                        print(index);
                       });
                       Scaffold.of(context).showSnackBar(
                           SnackBar(content: Text("Узбек грустит(")));
@@ -163,7 +164,6 @@ class shop extends State<Shop> {
     );
   }
 
-
   void deCountShavuha() {
     setState(() {
       countShava--;
@@ -171,7 +171,6 @@ class shop extends State<Shop> {
   }
 
   String minut() {
-
     if (_time.minute + 3 == 0)
       return '${_time.minute}0';
     else if (_time.minute + 3 < 10 && 0 < _time.minute + 3)

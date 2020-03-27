@@ -28,13 +28,25 @@ class _chouse extends State<ChouseShavuha> {
         actions: <Widget>[
           if (countShava > 0)
             IconButton(
-              icon: Icon(Icons.shopping_cart),
+              alignment: Alignment.centerRight,
+              icon: Icon(
+                Icons.shopping_cart,
+                size: 26,
+              ),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) => Shop(),
                 ),
               ),
+            ),
+          if (countShava > 0)
+            Container(
+              child: Text(
+                '+$countShava',
+                style: TextStyle(fontSize: 18),
+              ),
+              margin: EdgeInsets.only(right: 5, top: 5),
             ),
         ],
       ),
@@ -124,32 +136,37 @@ class _chouse extends State<ChouseShavuha> {
                   margin: EdgeInsets.only(top: 50),
                   child: FlatButton(
                     onPressed: () {
-                      print(allIngredients);
-                      shaurmaList.add(ShaurShow(
-                          'assets/shavaCat.jpg',
-                          'Самостоятельная сборка',
-                          'Всё как вы просили',
-                          shaurmSum));
-                      shaurPrise[countShava] = shaurmSum;
-                      setState(() {
-                        print(shaurmSum);
-                        totalSum += shaurmSum;
-                        while (chiken > 0) chikenDeCounter(100);
-                        while (svinka > 0) svinkaDeCounter(100);
-                        while (tomato > 0) tomatoDeCounter(20);
-                        while (ogurec > 0) ogurecDeCounter(20);
-                        while (luk > 0) lukDeCounter(10);
-                        while (salat > 0) salatDeCounter(10);
-                        while (kapusta > 0) kapustaDeCounter(20);
-                        while (mazik > 0) mazikDeCounter(20);
-                        while (ketcup > 0) ketcupDeCounter(20);
-                        while (chiz > 0) chizDeCounter(20);
+                      if (shaurmSum == 0) {
+                        null;
+                      } else {
+                        print(allIngredients);
+                        shaurmaList.add(ShaurShow(
+                            'assets/shavaCat.jpg',
+                            'Самостоятельная сборка',
+                            'Всё как вы просили',
+                            shaurmSum));
+                        shaurPrise[countShava] = shaurmSum;
+                        priseList.add(shaurmSum);
+                        setState(() {
+                          print(shaurmSum);
 
-                        countShava++;
-                        shaurmSum = 0;
-                      });
-                      //print(shaurList);
-                      //print(allIngredients);
+                          totalSum += shaurmSum;
+                          while (chiken > 0) chikenDeCounter(100);
+                          while (svinka > 0) svinkaDeCounter(100);
+                          while (tomato > 0) tomatoDeCounter(20);
+                          while (ogurec > 0) ogurecDeCounter(20);
+                          while (luk > 0) lukDeCounter(10);
+                          while (salat > 0) salatDeCounter(10);
+                          while (kapusta > 0) kapustaDeCounter(20);
+                          while (mazik > 0) mazikDeCounter(20);
+                          while (ketcup > 0) ketcupDeCounter(20);
+                          while (chiz > 0) chizDeCounter(20);
+
+                          countShava++;
+                          shaurmSum = 0;
+                        });
+                      }
+                      ;
                     },
                     child: Text(
                       "Добавить за $shaurmSum",
@@ -165,6 +182,14 @@ class _chouse extends State<ChouseShavuha> {
         ),
       ),
     );
+  }
+
+  _displaySnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('Товар добавлен в корзину'),
+      duration: Duration(seconds: 1),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   Container ControlShaurm() {
@@ -425,82 +450,86 @@ class _chouse extends State<ChouseShavuha> {
     });
   }
 
-  Container ShaurAdd(String image, String name, String subText, int price) {
-    return Container(
-      child: SizedBox(
-        child: Card(
-          color: Colors.pink[100],
-          child: Container(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(8),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4.0),
-                    child: Image.asset(
-                      image,
-                      width: 100,
-                      height: 100,
+  Builder ShaurAdd(String image, String name, String subText, int price) {
+    return Builder(
+      builder: (context) => Container(
+        child: SizedBox(
+          child: Card(
+            color: Colors.pink[100],
+            child: Container(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(8),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4.0),
+                      child: Image.asset(
+                        image,
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    children: <Widget>[
-                      Center(
-                        child: Text(
-                          name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
-                        ),
-                      ),
-                      Center(
-                        child: Container(
-                          width: 200,
-                          child: new Text(
-                            subText,
-                            softWrap: true,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 12),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: <Widget>[
+                        Center(
+                          child: Text(
+                            name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 18),
                           ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 10, right: 10),
-                        //color: Colors.deepOrange,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Цена:$price',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 18),
+                        Center(
+                          child: Container(
+                            width: 200,
+                            child: new Text(
+                              subText,
+                              softWrap: true,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(fontSize: 12),
                             ),
-                            SizedBox(
-                              child: FlatButton(
-                                onPressed: () {
-                                  shaurList[countShava] =
-                                      ShaurShow(image, name, subText, price);
-                                  shaurPrise[countShava] = price;
-                                  countShavuha();
-                                  print(shaurList);
-                                  totalSum += price;
-                                  shaurmaList.add(
-                                      ShaurShow(image, name, subText, price));
-                                },
-                                child: Text("Добавить"),
-                                color: Colors.grey[200],
-                                disabledColor: Colors.grey[200],
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          //color: Colors.deepOrange,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                'Цена:$price',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 18),
+                              ),
+                              SizedBox(
+                                child: FlatButton(
+                                  onPressed: () {
+                                    shaurList[countShava] =
+                                        ShaurShow(image, name, subText, price);
+                                    shaurPrise[countShava] = price;
+                                    priseList.add(price);
+                                    countShavuha();
+                                    print(shaurList);
+                                    totalSum += price;
+                                    shaurmaList.add(
+                                        ShaurShow(image, name, subText, price));
+                                    _displaySnackBar(context);
+                                  },
+                                  child: Text("Добавить"),
+                                  color: Colors.grey[200],
+                                  disabledColor: Colors.grey[200],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shavuha/ChouseShavuha.dart';
 
+bool mainTimer = false;
 int chiken = 0;
 int svinka = 0;
 int tomato = 0;
@@ -17,6 +18,7 @@ int countShava = 0;
 int totalSum = 0;
 Map<int, Container> shaurList = {};
 List<Container> shaurmaList = [];
+List<int> priseList = [];
 Map<int, int> shaurPrise = {};
 int timeForTimer = 3;
 List allIngredients = [
@@ -88,6 +90,9 @@ Container ShaurShow(String image, String name, String subText, int price) {
                   ),
                 ],
               ),
+            ),
+            Center(
+              child: Icon(Icons.backspace),
             ),
           ],
         ),

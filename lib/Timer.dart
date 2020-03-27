@@ -72,7 +72,7 @@ class _CountDownTimerState extends State<CountDownTimer>
     if (_start > 1)
       return WillPopScope(
         child: Scaffold(
-          backgroundColor: Colors.white10,
+          backgroundColor: Colors.green,
           body: AnimatedBuilder(
               animation: controller,
               builder: (context, child) {
@@ -180,21 +180,25 @@ class _CountDownTimerState extends State<CountDownTimer>
       );
     else
       return Scaffold(
-        body: AlertDialog(
-          title: Text("Ваш заказ готов!"),
-          content: Text("Наши шаурмейкеры всегда готовят качественное питание"),
-          actions: <Widget>[
-            FlatButton(
-                child: Text("Да"),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => MyApp()),
-                    ModalRoute.withName(MyApp.SCREEN_KEY),
-                  );
-                }),
-          ],
+        body: Container(
+          color: Colors.green,
+          child: AlertDialog(
+            title: Text("Ваш заказ готов!"),
+            content:
+                Text("Наши шаурмейкеры всегда готовят качественное питание"),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text("Да"),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => MyApp()),
+                      ModalRoute.withName(MyApp.SCREEN_KEY),
+                    );
+                  }),
+            ],
+          ),
         ),
       );
   }

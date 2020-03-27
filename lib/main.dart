@@ -30,8 +30,10 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text("Адрес: Тогу 3 этаж"),
+              Text("Телефон: 8 800 550 02 28"),
               Container(
-                margin: EdgeInsets.only(bottom: 30),
+                margin: EdgeInsets.only(bottom: 20, top: 20),
                 child: ClipOval(
                   child: Image.asset(
                     'assets/shavaCat.jpg',
